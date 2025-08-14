@@ -1,0 +1,81 @@
+<% layout("/layouts/boilerPlates.ejs") %>
+
+<body>
+  <div class="container mt-2">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <form action="/listings" method="post" novalidate class="needs-validation bg-white p-4 p-md-5 shadow rounded-4" enctype="multipart/form-data">
+          <h3 class="mb-4 fw-bold"><span class="text-danger">Create</span> A New Listing</h3>
+
+          <!-- Title -->
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input name="listing[title]" type="text" class="form-control" placeholder="Add a catchy title" required>
+            <div class="invalid-feedback">Please give a title.</div>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="listing[description]" class="form-control" placeholder="Write a short description..." required></textarea>
+            <div class="invalid-feedback">Please enter a description.</div>
+          </div>
+
+          <!-- Image -->
+          <div class="mb-3">
+            <label for="image" class="form-label">Upload Listing Image</label>
+            <input type="file" name="listing[image]" class="form-control" required>
+            <div class="invalid-feedback">Please upload an image.</div>
+          </div>
+
+          <!-- Category -->
+          <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select name="listing[category]" id="category" class="form-control" required>
+              <option value="">Select a category</option>
+              <option value="Trending">Trending</option>
+              <option value="Room">Room</option>
+              <option value="Iconic Cities">Iconic Cities</option>
+              <option value="Hostels">Hostels</option>
+              <option value="Guest House">Guest House</option>
+              <option value="Swimming Pools">Swimming Pools</option>
+              <option value="Shops">Shops</option>
+              <option value="Camping">Camping</option>
+            </select>
+            <div class="invalid-feedback">Please select a category.</div>
+          </div>
+
+          <!-- Price & Country -->
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label for="price" class="form-label">Price</label>
+              <input type="number" name="listing[price]" class="form-control" placeholder="Enter price" required>
+              <div class="invalid-feedback">Price cannot be empty.</div>
+            </div>
+            <div class="col-md-8 mb-3">
+              <label for="country" class="form-label">Country</label>
+              <input type="text" name="listing[country]" class="form-control" placeholder="India" value="India" required>
+              <div class="invalid-feedback">Country cannot be empty.</div>
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div class="mb-4">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" name="listing[location]" class="form-control" placeholder="Enter location" required>
+            <div class="invalid-feedback">Location cannot be empty.</div>
+          </div>
+
+          <!-- WhatsApp -->
+          <div class="mb-4">
+            <label for="whatsapp" class="form-label">WhatsApp Contact Number</label>
+            <input type="tel" id="whatsapp" name="listing[whatsapp]" class="form-control" placeholder="Enter 10-digit phone number" pattern="[0-9]{10}" required>
+            <div class="invalid-feedback">Please enter a valid 10-digit number.</div>
+          </div>
+
+          <button class="btn btn-danger px-4 py-2 fw-semibold rounded-pill">ADD</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
