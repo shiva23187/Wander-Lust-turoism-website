@@ -1,20 +1,25 @@
 const Listing = require("../models/listing.js");
 const Review = require("../models/review.js");
 
-// Show all listings with search
+// Show all listings with search & category filter
 module.exports.Index = async (req, res) => {
     try {
-        const { q } = req.query; // search query
-        let listings;
+        const { q, category } = req.query; // search query & category filter
+        let filter = {};
 
+        // Search by location
         if (q) {
             const regex = new RegExp(q.trim(), "i"); // case-insensitive
-            listings = await Listing.find({ location: regex });
-        } else {
-            listings = await Listing.find({});
+            filter.location = regex;
         }
 
-        res.render("listings/allListings", { allListings: listings, searchQuery: q });
+        // Filter by category
+        if (category && category !== "All") {
+            filter.category = category;
+        }
+
+        const listings = await Listing.find(filter);
+        res.render("listings/allListings", { allListings: listings, searchQuery: q, selectedCategory: category || "All" });
     } catch (err) {
         console.log(err);
         req.flash("error", "Failed to load listings.");

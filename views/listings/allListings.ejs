@@ -24,14 +24,14 @@
   </style>
 
   <div id="filters">
-    <div class="filter"><div><i class="fa-solid fa-fire"></i></div><p>Trending</p></div>
-    <div class="filter"><div><i class="fa-solid fa-bed"></i></div><p>Room</p></div>
-    <div class="filter"><div><i class="fa-solid fa-mountain-city"></i></div><p>Iconic cities</p></div>
-    <div class="filter"><div><i class="fa-solid fa-hotel"></i></div><p>Hostels</p></div>
-    <div class="filter"><div><i class="fa-solid fa-house-user"></i></div><p>Guest House</p></div>
-    <div class="filter"><div><i class="fa-solid fa-person-swimming"></i></div><p>Swimming pools</p></div>
-    <div class="filter"><div><i class="fa-solid fa-shop"></i></div><p>Shops</p></div>
-    <div class="filter"><div><i class="fa-solid fa-campground"></i></div><p>Camping</p></div>
+    <div class="filter" onclick="filterListings('Trending')"><i class="fa-solid fa-fire"></i><p>Trending</p></div>
+    <div class="filter" onclick="filterListings('Room')"><i class="fa-solid fa-bed"></i><p>Room</p></div>
+    <div class="filter" onclick="filterListings('Iconic Cities')"><i class="fa-solid fa-mountain-city"></i><p>Iconic Cities</p></div>
+    <div class="filter" onclick="filterListings('Hostels')"><i class="fa-solid fa-hotel"></i><p>Hostels</p></div>
+    <div class="filter" onclick="filterListings('Guest House')"><i class="fa-solid fa-house-user"></i><p>Guest House</p></div>
+    <div class="filter" onclick="filterListings('Swimming Pools')"><i class="fa-solid fa-person-swimming"></i><p>Swimming Pools</p></div>
+    <div class="filter" onclick="filterListings('Shops')"><i class="fa-solid fa-shop"></i><p>Shops</p></div>
+    <div class="filter" onclick="filterListings('Camping')"><i class="fa-solid fa-campground"></i><p>Camping</p></div>
 
     <div class="tax-toggle">
       <div class="form-check form-switch">
@@ -42,35 +42,45 @@
   </div>
 
   <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4 rounded-3">
-    <% for (let listing of allListings) { %>
-      <a href="/listings/<%= listing._id %>" class="listing-link text-decoration-none">
-        <div class="card h-100 shadow-sm border-0 rounded-3 mb-4">
-          <div class="card-img-top overflow-hidden rounded-3" style="height: 20rem;">
-            <img src="<%= listing.image?.url || '/images/fallback.jpg' %>" class="card-img-top rounded-3 zoom-image" alt="listing_image">
+    <% if (allListings.length === 0) { %>
+      <div style="width: 100%; height: 60vh; display: flex; justify-content: center; align-items: center; text-align: center; font-size: 1.5rem; color: #555;">
+        <h2>No listings found!</h2>
+      </div>
+    <% } else { %>
+      <% for (let listing of allListings) { %>
+        <a href="/listings/<%= listing._id %>" class="listing-link text-decoration-none">
+          <div class="card h-100 shadow-sm border-0 rounded-3 mb-4">
+            <div class="card-img-top overflow-hidden rounded-3" style="height: 20rem;">
+              <img src="<%= listing.image?.url || '/images/fallback.jpg' %>" class="card-img-top rounded-3 zoom-image" alt="listing_image">
+            </div>
+            <div class="card-body p-6">
+              <p class="card-text">
+                <b><%= listing.title %></b> <br>
+                &#8377; <%= listing.price.toLocaleString("en-IN") %>/night
+                <i class="tax-info text-muted">&nbsp; &nbsp; + 18% GST</i>
+              </p>
+            </div>
           </div>
-          <div class="card-body p-6">
-            <p class="card-text">
-              <b><%= listing.title %></b> <br>
-              &#8377; <%= listing.price.toLocaleString("en-IN") %>/night
-              <i class="tax-info text-muted">&nbsp; &nbsp; + 18% GST</i>
-            </p>
-          </div>
-        </div>
-      </a>
+        </a>
+      <% } %>
     <% } %>
   </div>
 
   <script>
+    // Tax toggle
     let taxSwitch = document.getElementById("flexSwitchCheckDefault");
     taxSwitch.addEventListener("click", () => {
       let taxInfo = document.getElementsByClassName("tax-info");
       for (let info of taxInfo) {
-        if (info.style.display != "inline") {
-          info.style.display = "inline";
-        } else {
-          info.style.display = "none";
-        }
+        info.style.display = (info.style.display != "inline") ? "inline" : "none";
       }
     });
+
+    // Category filter
+    function filterListings(category) {
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.set("category", category); // add/update category
+      window.location.href = `/listings?${urlParams.toString()}`;
+    }
   </script>
 </body>
