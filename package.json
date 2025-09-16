@@ -6,12 +6,12 @@
   "version": "1.0.0",
   "description": "This is the major project from the DELTA batch.",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Prakhar katiyar",
+ "scripts": {
+  "start": "node MajorProject.js",
+  "dev": "nodemon MajorProject.js"
+}
+,
+  "author": "Golla Shiva",
   "license": "ISC",
   "dependencies": {
     "cloudinary": "^1.41.1",
